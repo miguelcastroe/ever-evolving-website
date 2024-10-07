@@ -11,8 +11,8 @@ function calculatePosition(angle, radius) {
 function evolveNodes() {
   const nodes = document.querySelectorAll('.node');
   const shapes = ['circle', 'square', 'hexagon', 'triangle'];
-  const angleStep = (2 * Math.PI) / nodes.length; // Equal angular spacing for nodes around the circle
-  const radius = 200;  // Fixed radius for consistent layout
+  const angleStep = (2 * Math.PI) / nodes.length; // Equal angular spacing for nodes
+  const radius = 200;  // Fixed radius
 
   nodes.forEach((node, index) => {
     const shapeDiv = node.querySelector('.shape');
@@ -22,12 +22,12 @@ function evolveNodes() {
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
     shapeDiv.className = 'shape ' + randomShape;
 
-    // Calculate new position in a circular layout (with fixed radius for consistency)
+    // Calculate new position in a circular layout (fixed radius)
     const { x, y } = calculatePosition(angle, radius);
 
-    // Smooth movement using GSAP for both nodes and lines
+    // Use GSAP to move the nodes smoothly
     gsap.to(node, {
-      left: `${x - 21}px`, // Subtracting half the size of the shape (42px / 2 = 21px)
+      left: `${x - 21}px`, // 21px to center the node
       top: `${y - 21}px`,
       duration: 2,
       ease: 'power1.inOut',
@@ -52,11 +52,11 @@ function evolveNodes() {
   });
 }
 
-// Function to evolve nodes over time, initializing with correct positions and lines connected
+// Start the evolution process
 function startEvolution() {
-  evolveNodes();  // Initial call to connect all nodes to the central node at start
+  evolveNodes();  // Initial connection at start
   setInterval(evolveNodes, 5000);  // Update every 5 seconds
 }
 
-// Initial call to start the evolution
+// Call the startEvolution to initialize everything
 startEvolution();
