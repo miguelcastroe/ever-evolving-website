@@ -19,11 +19,26 @@ body {
   height: 80vh;
   background-color: #fff;
   overflow: hidden;
-  cursor: grab;
 }
 
+/* Central Node */
+.central-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+/* Dynamic Nodes */
 .node {
-  position: absolute; /* Ensure nodes can be positioned dynamically */
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,30 +49,16 @@ body {
 
 /* Shape */
 .shape {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   background-color: #ccc;
   transition: all 0.5s ease;
 }
 
 .label {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #333;
-}
-
-.info-box {
-  display: none;
-  background-color: white;
-  padding: 10px;
-  border: 1px solid #ccc;
-  position: absolute;
-  top: 80px;
-  left: -20px;
-  z-index: 1;
+  margin-top: 5px;
   font-size: 12px;
-  color: #000;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  color: #333;
 }
 
 /* Shape Modifiers */
@@ -75,4 +76,12 @@ body {
 
 .triangle {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* SVG for thin lines connecting nodes to central node */
+.connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
