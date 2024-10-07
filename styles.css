@@ -15,8 +15,8 @@ body {
 
 .node-map {
   position: relative;
-  width: 80vw;
-  height: 80vh;
+  width: 100vw;
+  height: 100vh;
   background-color: #fff;
   overflow: hidden;
 }
@@ -34,8 +34,8 @@ body {
 }
 
 .central-node .shape {
-  width: 60px;
-  height: 60px;
+  width: 42px;
+  height: 42px;
   background-color: #333;
   border-radius: 50%;
   transition: all 0.5s ease;
@@ -61,8 +61,8 @@ body {
 
 /* Shape */
 .shape {
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
   background-color: #ccc;
   transition: all 0.5s ease;
 }
