@@ -11,12 +11,12 @@ function calculatePosition(angle, radius) {
 function evolveNodes() {
   const nodes = document.querySelectorAll('.node');
   const shapes = ['circle', 'square', 'hexagon', 'triangle'];
-  const radius = 200; // Fixed radius for circular layout
   const angleStep = (2 * Math.PI) / nodes.length; // Calculate equal angular spacing
 
   nodes.forEach((node, index) => {
     const shapeDiv = node.querySelector('.shape');
     const angle = index * angleStep;
+    const radius = Math.floor(Math.random() * 100) + 150;  // Randomize radius between 150px and 250px
 
     // Randomize shape
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
@@ -35,7 +35,7 @@ function evolveNodes() {
 
     // Update the connection lines
     const line = document.querySelector(`#line${index + 1}`);
-    const centralNodeRect = document.querySelector('.central-node').getBoundingClientRect();
+    const centralNodeRect = document.querySelector('.central-node .shape').getBoundingClientRect();
     const nodeRect = node.getBoundingClientRect();
 
     line.setAttribute('x1', centralNodeRect.left + centralNodeRect.width / 2);
