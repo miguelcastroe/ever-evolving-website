@@ -7,11 +7,13 @@ function calculatePosition(angle, radius) {
   return { x, y };
 }
 
-// Function to randomize shapes, positions, and connect them to the central node
+// Function to correctly align lines and evolve nodes
 function evolveNodes() {
   const nodes = document.querySelectorAll('.node');
   const shapes = ['circle', 'square', 'hexagon', 'triangle'];
-  const angleStep = (2 * Math.PI) / nodes.length; // Calculate equal angular spacing
+  const angleStep = (2 * Math.PI) / nodes.length; // Equal angular spacing for nodes around the circle
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
 
   nodes.forEach((node, index) => {
     const shapeDiv = node.querySelector('.shape');
@@ -22,7 +24,7 @@ function evolveNodes() {
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
     shapeDiv.className = 'shape ' + randomShape;
 
-    // Calculate new position in a circular layout
+    // Calculate new position in circular layout
     const { x, y } = calculatePosition(angle, radius);
 
     // Smooth movement using GSAP
@@ -33,24 +35,26 @@ function evolveNodes() {
       ease: 'power1.inOut'
     });
 
-    // Ensure that lines are updated after GSAP completes its animation
-    gsap.to(`#line${index + 1}`, {
-      onUpdate: () => {
-        const line = document.querySelector(`#line${index + 1}`);
-        const centralNodeRect = document.querySelector('.central-node .shape').getBoundingClientRect();
-        const nodeRect = node.getBoundingClientRect();
+    // Update the connection lines
+    const line = document.querySelector(`#line${index + 1}`);
+    const centralNodeRect = document.querySelector('.central-node .shape').getBoundingClientRect();
+    const nodeRect = node.getBoundingClientRect();
 
-        // Update line start and end positions
-        line.setAttribute('x1', centralNodeRect.left + centralNodeRect.width / 2);
-        line.setAttribute('y1', centralNodeRect.top + centralNodeRect.height / 2);
-        line.setAttribute('x2', nodeRect.left + nodeRect.width / 2);
-        line.setAttribute('y2', nodeRect.top + nodeRect.height / 2);
-      },
-    });
+    // Calculate line start and end positions based on the center of the nodes
+    const lineX1 = centralNodeRect.left + centralNodeRect.width / 2;
+    const lineY1 = centralNodeRect.top + centralNodeRect.height / 2;
+    const lineX2 = nodeRect.left + nodeRect.width / 2;
+    const lineY2 = nodeRect.top + nodeRect.height / 2;
+
+    // Update the line attributes
+    line.setAttribute('x1', lineX1);
+    line.setAttribute('y1', lineY1);
+    line.setAttribute('x2', lineX2);
+    line.setAttribute('y2', lineY2);
   });
 }
 
-// Function to evolve nodes over time
+// Function to evolve nodes every 5 seconds
 function startEvolution() {
   evolveNodes();
   setInterval(evolveNodes, 5000); // Update every 5 seconds
