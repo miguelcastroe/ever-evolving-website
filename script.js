@@ -12,9 +12,7 @@ function evolveNodes() {
   const nodes = document.querySelectorAll('.node');
   const shapes = ['circle', 'square', 'hexagon', 'triangle'];
   const angleStep = (2 * Math.PI) / nodes.length; // Equal angular spacing for nodes around the circle
-  const centerX = window.innerWidth / 2;
-  const centerY = window.innerHeight / 2;
-  const radius = 200;  // Fixed radius for seamless transitions
+  const radius = 200;  // Fixed radius for consistent layout
 
   nodes.forEach((node, index) => {
     const shapeDiv = node.querySelector('.shape');
@@ -54,10 +52,10 @@ function evolveNodes() {
   });
 }
 
-// Function to evolve nodes over time
+// Function to evolve nodes over time, initializing with correct positions and lines connected
 function startEvolution() {
-  evolveNodes();
-  setInterval(evolveNodes, 5000); // Update every 5 seconds
+  evolveNodes();  // Initial call to connect all nodes to the central node at start
+  setInterval(evolveNodes, 5000);  // Update every 5 seconds
 }
 
 // Initial call to start the evolution
