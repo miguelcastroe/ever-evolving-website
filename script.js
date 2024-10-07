@@ -1,75 +1,59 @@
-// Function to randomize the color of grid items
-function randomizeColor() {
-  const gridItems = document.querySelectorAll('.grid-item');
-  gridItems.forEach(item => {
-    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-    item.style.backgroundColor = randomColor;
+// Function to generate random shape classes and size
+function randomizeShapes() {
+  const shapes = ['circle', 'square', 'hexagon', 'triangle'];
+  const nodes = document.querySelectorAll('.node');
+  const greyscaleColors = ['#333', '#666', '#999', '#ccc', '#eee'];
+
+  nodes.forEach(node => {
+    // Randomize shape
+    const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+    
+    // Randomize size
+    const randomSize = Math.floor(Math.random() * 60) + 40;
+    
+    // Apply random size
+    node.style.width = randomSize + 'px';
+    node.style.height = randomSize + 'px';
+    
+    // Apply random color (greyscale)
+    const randomColor = greyscaleColors[Math.floor(Math.random() * greyscaleColors.length)];
+    node.style.backgroundColor = randomColor;
+    node.style.borderColor = randomColor;
+
+    // Change the shape dynamically
+    if (randomShape === 'circle') {
+      node.style.borderRadius = '50%';
+    } else if (randomShape === 'square') {
+      node.style.borderRadius = '0';
+    } else if (randomShape === 'hexagon') {
+      node.style.clipPath = 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
+    } else if (randomShape === 'triangle') {
+      node.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
+    }
   });
 }
 
-// Function to randomize the position of grid items
-function randomizeGrid() {
-  const container = document.querySelector('.grid-container');
-  const gridItems = Array.from(container.children);
-  
-  // Shuffle grid items
-  gridItems.sort(() => Math.random() - 0.5);
-  
-  // Clear the container and re-append shuffled items
-  container.innerHTML = '';
-  gridItems.forEach(item => {
-    container.appendChild(item);
+// Function to randomize node positions within the node map
+function randomizePositions() {
+  const nodes = document.querySelectorAll('.node');
+  nodes.forEach(node => {
+    const randomTop = Math.floor(Math.random() * 80) + 10;
+    const randomLeft = Math.floor(Math.random() * 80) + 10;
+    
+    // Apply random positioning
+    node.style.top = randomTop + '%';
+    node.style.left = randomLeft + '%';
   });
 }
 
-// Add click event listeners to each grid item for evolution
-document.querySelectorAll('.grid-item').forEach(item => {
-  item.addEventListener('click', () => {
-    randomizeColor();
-    randomizeGrid();
-  });
-});
-
-// Automatically evolve the grid every 5 seconds
-setInterval(() => {
-  randomizeColor();
-  randomizeGrid();
-}, 5000);
-
-// Load interaction count from localStorage
-let interactionCount = localStorage.getItem('interactionCount') || 0;
-
-// Function to update the interaction count and store it
-function updateInteractionCount() {
-  interactionCount++;
-  localStorage.setItem('interactionCount', interactionCount);
-  document.querySelector('body').style.backgroundColor = interactionCount % 2 === 0 ? '#f0f0f0' : '#1a1a1a'; // change background color based on interactions
+// Function to evolve the nodes (randomize shapes, colors, positions)
+function evolveNodes() {
+  randomizeShapes();
+  randomizePositions();
 }
 
-// Add click event listeners to each grid item for evolution and interaction tracking
-document.querySelectorAll('.grid-item').forEach(item => {
-  item.addEventListener('click', () => {
-    randomizeColor();
-    randomizeGrid();
-    updateInteractionCount();  // Track interactions
-  });
-});
+// Evolve nodes every 5 seconds
+setInterval(evolveNodes, 5000);
 
-// Randomize functions (from the earlier example)
-function randomizeColor() {
-  const gridItems = document.querySelectorAll('.grid-item');
-  gridItems.forEach(item => {
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    item.style.backgroundColor = randomColor;
-  });
-}
-
-function randomizeGrid() {
-  const container = document.querySelector('.grid-container');
-  const gridItems = Array.from(container.children);
-  gridItems.sort(() => Math.random() - 0.5);  // Shuffle grid items
-  container.innerHTML = '';
-  gridItems.forEach(item => {
-    container.appendChild(item);
-  });
-}
+// Initial evolution when the page loads
+evolveNodes();
