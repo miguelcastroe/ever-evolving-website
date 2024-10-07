@@ -1,33 +1,29 @@
-// Function to calculate circular positions around the central node
-function calculatePosition(angle, radius) {
-  const centerX = window.innerWidth / 2;
-  const centerY = window.innerHeight / 2;
-  const x = centerX + radius * Math.cos(angle);
-  const y = centerY + radius * Math.sin(angle);
-  return { x, y };
-}
-
-// Function to correctly align lines and evolve nodes
 function evolveNodes() {
+  console.log("Evolve nodes called");
+
   const nodes = document.querySelectorAll('.node');
   const shapes = ['circle', 'square', 'hexagon', 'triangle'];
   const angleStep = (2 * Math.PI) / nodes.length; // Equal angular spacing for nodes
   const radius = 200;  // Fixed radius
 
   nodes.forEach((node, index) => {
+    console.log(`Node ${index + 1} being updated`);
+
     const shapeDiv = node.querySelector('.shape');
     const angle = index * angleStep;
 
     // Randomize shape
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
     shapeDiv.className = 'shape ' + randomShape;
+    console.log(`Node ${index + 1} shape updated to ${randomShape}`);
 
     // Calculate new position in a circular layout (fixed radius)
     const { x, y } = calculatePosition(angle, radius);
+    console.log(`Node ${index + 1} new position: x = ${x}, y = ${y}`);
 
     // Use GSAP to move the nodes smoothly
     gsap.to(node, {
-      left: `${x - 21}px`, // 21px to center the node
+      left: `${x - 21}px`,
       top: `${y - 21}px`,
       duration: 2,
       ease: 'power1.inOut',
@@ -47,6 +43,8 @@ function evolveNodes() {
         line.setAttribute('y1', lineY1);
         line.setAttribute('x2', lineX2);
         line.setAttribute('y2', lineY2);
+
+        console.log(`Line ${index + 1} updated: (${lineX1}, ${lineY1}) -> (${lineX2}, ${lineY2})`);
       }
     });
   });
@@ -54,6 +52,7 @@ function evolveNodes() {
 
 // Start the evolution process
 function startEvolution() {
+  console.log("Start evolution called");
   evolveNodes();  // Initial connection at start
   setInterval(evolveNodes, 5000);  // Update every 5 seconds
 }
