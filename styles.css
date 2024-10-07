@@ -6,32 +6,107 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #f4f4f4;
+}
+
+.node-map {
+  position: relative;
+  width: 70%;
   height: 100vh;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 200px);
-  gap: 10px;
-  width: 80vw;
-}
-
-.grid-item {
-  background-color: #333;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
-  transition: background-color 0.3s, transform 0.3s;
+  position: relative;
 }
 
-.grid-item:hover {
-  transform: scale(1.1);
+.node {
+  position: absolute;
+  padding: 20px;
+  background-color: #ccc;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   cursor: pointer;
+  transition: transform 0.2s ease;
+  color: #000;
+  border: 2px solid #666;
+}
+
+.node:hover {
+  transform: scale(1.1);
+}
+
+#center-node {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333;
+  color: white;
+}
+
+/* Base positions for other nodes */
+#node1 {
+  top: 30%;
+  left: 30%;
+}
+
+#node2 {
+  top: 70%;
+  left: 30%;
+}
+
+#node3 {
+  top: 10%;
+  left: 50%;
+}
+
+#node4 {
+  top: 70%;
+  left: 70%;
+}
+
+#node5 {
+  top: 30%;
+  left: 70%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 30%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar p {
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  color: #000;
+  text-decoration: none;
+}
+
+.expandable h3 {
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.expandable ul {
+  list-style: none;
+  margin-left: 20px;
+  display: none;
+}
+
+/* SVG for connections */
+.connections {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
