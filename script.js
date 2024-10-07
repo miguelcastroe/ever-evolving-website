@@ -33,15 +33,20 @@ function evolveNodes() {
       ease: 'power1.inOut'
     });
 
-    // Update the connection lines
-    const line = document.querySelector(`#line${index + 1}`);
-    const centralNodeRect = document.querySelector('.central-node .shape').getBoundingClientRect();
-    const nodeRect = node.getBoundingClientRect();
+    // Ensure that lines are updated after GSAP completes its animation
+    gsap.to(`#line${index + 1}`, {
+      onUpdate: () => {
+        const line = document.querySelector(`#line${index + 1}`);
+        const centralNodeRect = document.querySelector('.central-node .shape').getBoundingClientRect();
+        const nodeRect = node.getBoundingClientRect();
 
-    line.setAttribute('x1', centralNodeRect.left + centralNodeRect.width / 2);
-    line.setAttribute('y1', centralNodeRect.top + centralNodeRect.height / 2);
-    line.setAttribute('x2', nodeRect.left + nodeRect.width / 2);
-    line.setAttribute('y2', nodeRect.top + nodeRect.height / 2);
+        // Update line start and end positions
+        line.setAttribute('x1', centralNodeRect.left + centralNodeRect.width / 2);
+        line.setAttribute('y1', centralNodeRect.top + centralNodeRect.height / 2);
+        line.setAttribute('x2', nodeRect.left + nodeRect.width / 2);
+        line.setAttribute('y2', nodeRect.top + nodeRect.height / 2);
+      },
+    });
   });
 }
 
