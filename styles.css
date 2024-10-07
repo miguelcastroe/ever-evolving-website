@@ -7,106 +7,61 @@
 body {
   font-family: Arial, sans-serif;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background-color: #f4f4f4;
 }
 
 .node-map {
   position: relative;
-  width: 70%;
-  height: 100vh;
+  width: 80vw;
+  height: 80vh;
+  background-color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  position: relative;
 }
 
+/* Each node is a container for both the shape and the label */
 .node {
   position: absolute;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+/* Shape */
+.shape {
+  width: 50px;
+  height: 50px;
   background-color: #ccc;
+  transition: all 0.5s ease;
+}
+
+/* Text label */
+.label {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  transition: color 0.5s ease;
+}
+
+/* Different shapes */
+.circle {
   border-radius: 50%;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  color: #000;
-  border: 2px solid #666;
 }
 
-.node:hover {
-  transform: scale(1.1);
+.square {
+  border-radius: 0;
 }
 
-#center-node {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #333;
-  color: white;
+.hexagon {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
-/* Base positions for other nodes */
-#node1 {
-  top: 30%;
-  left: 30%;
-}
-
-#node2 {
-  top: 70%;
-  left: 30%;
-}
-
-#node3 {
-  top: 10%;
-  left: 50%;
-}
-
-#node4 {
-  top: 70%;
-  left: 70%;
-}
-
-#node5 {
-  top: 30%;
-  left: 70%;
-}
-
-/* Sidebar */
-.sidebar {
-  width: 30%;
-  background-color: white;
-  padding: 20px;
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-  overflow-y: auto;
-}
-
-.sidebar h2 {
-  margin-bottom: 20px;
-}
-
-.sidebar p {
-  margin-bottom: 20px;
-}
-
-.sidebar a {
-  color: #000;
-  text-decoration: none;
-}
-
-.expandable h3 {
-  cursor: pointer;
-  margin: 10px 0;
-}
-
-.expandable ul {
-  list-style: none;
-  margin-left: 20px;
-  display: none;
-}
-
-/* SVG for connections */
-.connections {
-  position: absolute;
-  top: 0;
-  left: 0;
+.triangle {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
