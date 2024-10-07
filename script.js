@@ -9,13 +9,19 @@ function evolveNodes() {
 
     // Randomize shape
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-    shapeDiv.className = 'shape ' + randomShape;  // Add the shape class dynamically
+    shapeDiv.className = 'shape ' + randomShape;
 
     // Randomize position within the node-map container
-    const randomTop = Math.floor(Math.random() * 80) + 10;  // Range between 10% and 90% top
-    const randomLeft = Math.floor(Math.random() * 80) + 10; // Range between 10% and 90% left
-    node.style.top = randomTop + '%';
-    node.style.left = randomLeft + '%';
+    const randomTop = Math.floor(Math.random() * 80) + 10;
+    const randomLeft = Math.floor(Math.random() * 80) + 10;
+    
+    // Smooth movement using GSAP
+    gsap.to(node, {
+      top: randomTop + '%',
+      left: randomLeft + '%',
+      duration: 2,
+      ease: 'power1.inOut'
+    });
 
     // Randomize greyscale color
     const randomGrey = Math.floor(Math.random() * 255);
@@ -27,8 +33,38 @@ function evolveNodes() {
   });
 }
 
-// Evolve nodes every 5 seconds
-setInterval(evolveNodes, 5000);
+// Function to toggle the info box on node click
+function enableNodeInteraction() {
+  const nodes = document.querySelectorAll('.node');
 
-// Initial call to start the evolution
-evolveNodes();
+  nodes.forEach(node => {
+    node.addEventListener('click', function() {
+      const infoBox = this.querySelector('.info-box');
+      if (infoBox.style.display === 'block') {
+        gsap.to(infoBox, { opacity: 0, display: 'none', duration: 0.5 });
+      } else {
+        gsap.to(infoBox, { opacity: 1, display: 'block', duration: 0.5 });
+      }
+    });
+  });
+}
+
+// Pan and Zoom functionality using Panzoom
+const nodeMap = document.querySelector('.node-map');
+const panzoomInstance = panzoom(nodeMap, {
+  zoomSpeed: 0.065,
+  maxZoom: 3,
+  minZoom: 0.5,
+  bounds: true,
+  boundsPadding: 0.1
+});
+
+// Function to evolve nodes over time
+function startEvolution() {
+  evolveNodes();
+  setInterval(evolveNodes, 5000);
+}
+
+// Initialize everything
+enableNodeInteraction();
+startEvolution();
